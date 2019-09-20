@@ -51,7 +51,8 @@ function searchThis(findme,howMany="10",startYear="2018",endYear="2019"){
 };
 
 $(function(){
-    $("#search_button").on('click',function(){
+    $("#search_button").on('click',function(e){
+        e.preventDefault();
         var searchTerm = $("#search_term").val();
         searchThis(searchTerm);
     }); // END click search_button

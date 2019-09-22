@@ -56,25 +56,17 @@ function updatePage(NYTData){
     var section = docs[i].section_name;
     var datePublished = docs[i].pub_date;
     var linkURL = docs[i].web_url;
-    // console.log("Title:", title);
-    // console.log("Written By:", written_by);
-    // console.log("Section:", section);
-    // console.log("date published:", datePublished);
-    // console.log("Link:", linkURL);
 
-    var articleHeadline = $("<h2>").addClass("articleHeadline");
     var articleNumber = $("<span>").addClass("label label-primary").text(i+1);
     title = $("<strong>").text(" "+title);
-    articleHeadline.append(articleNumber,title);
 
-    written_by = (written_by !== null ) ? $("<h3>").text(written_by) : "";
-    section = $("<h4>").text(section);
-    datePublished = $("<h4>").text(datePublished);
+    written_by = (written_by !== null ) ? $("<h5>").text(written_by) : "";
+    section = $("<h5>").text(section);
+    datePublished = $("<h5>").text(datePublished);
     linkURL = $("<a>").attr("href",linkURL).attr("target","_blank").text(linkURL);
     
-    var row = $("<li>").addClass("list-group-item articleHeadline").append(articleHeadline, written_by, section, datePublished, linkURL);
-    row = $("<ul>").addClass("list-group").html(row);
-    row = $("<div>").addClass("card card-body bg-light").attr("id","article-"+(i+1)).html(row);
+    var row = $("<li>").addClass("list-group-item articleHeadline").append(articleNumber, title, written_by, section, datePublished, linkURL);
+    row = $("<ul>").addClass("list-group").attr("id","article-"+(i+1)).html(row);
     resultDiv.append(row);
   }
 }
@@ -82,9 +74,15 @@ function updatePage(NYTData){
 $(function(){
   $("#search").on('click',function(e){
     e.preventDefault();
+    
     var searchTerm = $("#search_term").val().trim();
     var startYear = $("#startYear").val().trim();
     var endYear = $("#endYear").val().trim();
+
     searchThis(searchTerm, startYear, endYear);
-  }); // END click search_button
+  }); 
+
+  $("#clear-all").on("click", function(){
+    $("#article-section").empty();
+  });
 });

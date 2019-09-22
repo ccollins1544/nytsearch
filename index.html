@@ -21,7 +21,9 @@
 
   <div class="container">
     <div class="jumbotron">
-      <h1>New York Times Search</h1>
+      <h1 class="text-center">
+        <i class="far fa-newspaper"></i><strong> New York Times Search</strong>
+      </h1>
     </div>
 
     <!-- Search Parameters Card -->
@@ -29,8 +31,9 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h3>Search Parameters</h3>
+              <i class="fa fa-list-alt"></i><strong> Search Parameters</strong>
           </div>
+
           <div class="card-body">
             <form role="form">
               <div class="form-group">
@@ -57,8 +60,8 @@
                 <input type="text" class="form-control" id="endYear">
               </div>
 
-              <button type="submit" class="btn btn-primary" id="search">Search</button>
-              <button type="button" class="btn btn-light" id="clear">Clear</button>
+              <button type="submit" class="btn btn-primary" id="search"><i class="fa fa-search"></i> Search</button>
+              <button type="button" class="btn btn-light" id="clear-all"><i class="fa fa-trash"></i> Clear Results</button>
             </form>
           </div>
         </div>
@@ -70,17 +73,10 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h3>Search Results</h3>
+            <i class="fa fa-table"></i><strong> Top Articles</strong>
           </div>
-          <div class="card-body" id="article-section">
-            <!-- <div class="card card-body bg-light">
-              <h2>Title</h2>
-              <h3>Author</h3>
-              <h4>Section</h4>
-              <h4>Date</h4>
-              <h4>Link</h4>
-            </div> -->
-          </div>
+
+          <div class="card-body" id="article-section"></div>
         </div>
       </div><!-- .col-lg-12 -->
     </div><!-- .row -->

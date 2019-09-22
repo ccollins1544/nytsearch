@@ -1,63 +1,102 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Search NYT</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Search NYT</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-    <div class="jumbotron jumbotron-fluid"
-        style="font-size: 60px; background: #20315A; color: white; font-family: Lato; font-weight: bold; text-align: center;">
-        New York Times Search
+  <div class="container">
+    <div class="jumbotron">
+      <h1>New York Times Search</h1>
     </div>
 
-    <div class="container">
+    <!-- Search Parameters Card -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h3>Search Parameters</h3>
+          </div>
+          <div class="card-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="search">Search Term:</label>
+                <input type="text" class="form-control" id="search">
+              </div>
 
-        <div class="card panel-heading h3"
-            style="background-color: #2c3e50; border-color: #2c3e50; border-top-right-radius: 3px; border-top-left-radius: 3px;">
-            Search Parameters
-            <div class="card-body">
-                <form>
-                    <div class="form-group" style="background-color: white">
-                        <label for="search_term">Search Terms</label>
-                        <input type="text" class="form-control" id="search_term">
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="search_button">Submit</button>
-                </form>
-            </div>
+              <div class="form-group">
+                <label for="sel1">Number of Records to Retrieve:</label>
+                <select class="form-control" id="sel1">
+                  <option value="1">1</option>
+                  <option value="5" selected>5</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="startYear">Start Year:</label>
+                <input type="text" class="form-control" id="startYear">
+              </div>
+
+              <div class="form-group">
+                <label for="endYear">End Year:</label>
+                <input type="text" class="form-control" id="endYear">
+              </div>
+
+              <button type="submit" class="btn btn-primary">Search</button>
+              <button type="button" class="btn btn-light">Clear</button>
+            </form>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="results"></div>
+      </div><!-- .col-lg-12 -->
+    </div><!-- .row -->
+
+    <!-- Results Card -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h3>Search Results</h3>
+          </div>
+          <div class="card-body">
+            <div class="card card-body bg-light">
+              <h2>Title</h2>
+              <h3>Author</h3>
+              <h4>Section</h4>
+              <h4>Date</h4>
+              <h4>Link</h4>
             </div>
+          </div>
         </div>
-    </div>
+      </div><!-- .col-lg-12 -->
+    </div><!-- .row -->
 
+  </div><!-- .container -->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="assets/javascript/search.js"></script>
+  <!-- jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/javascript/search.js"></script>
 
 </body>
 

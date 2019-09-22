@@ -1,58 +1,90 @@
 /**
  * searchThis
  * @param {string} findme 
- * @param {integer} howMany 
  * @param {integer} startYear 
  * @param {integer} endYear 
+ * @return calls ajax to fetch the data which is then passed to the updatePage function.
  */
-function searchThis(findme,howMany="10",startYear="2018",endYear="2019"){
+function searchThis(findme, startYear, endYear){
   var apiKey = "fnXV6mDoynpDZ8Xrq1iTMUXpMGpP7Zpr";
-  var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + findme + "&sort=newest&api-key=" + apiKey;
+  var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
+
+  // Build queryURL --- START --- 
+  var queryParams = { "api-key" : apiKey };
+  if(findme === ""){ return; } // Can't search nothing.
   
-  startYear = parseInt(startYear) + "0101";
-  endYear = parseInt(endYear) + "0101";
-
-  queryURL += "&begin_date=" + startYear;
-  queryURL += "&end_date=" + endYear;
-
-  // DOM ELEMENTS
-  var resultDiv = $("#results");
+  queryParams.q = findme.trim();
+  
+  startYear = startYear.trim();
+  if(parseInt(startYear)){
+    startYear += "0101";
+    queryParams.begin_date = startYear;
+  }
+  
+  endYear = endYear.trim();
+  if(parseInt(endYear)){
+    endYear += "0101";
+    queryParams.end_date = endYear;
+  }
+  
+  queryParams.sort = "newest";
+  // Build queryURL --- END --- 
+  queryURL = queryURL + $.param(queryParams);
+  console.log("--------------------------------------------------------------------");
+  console.log(queryURL);
+  console.log("--------------------------------------------------------------------");
 
   $.ajax({
     url: queryURL,
     method: "GET",
-  }).then(function(dataResult) {
-    console.log(dataResult);
-    var docs = dataResult.response.docs;
-    
-    resultDiv.empty();
-    for(var i=0; i < howMany; i++){
-      var title = docs[i].headline.main;
-      var written_by = docs[i].byline.original;
-      console.log("Title: ",title);
-      console.log("By: ",written_by);
-      console.log("----------------------");
-
-
-      var articleHeadline = $("<h3>").addClass("articleHeadline");
-      var articleNumber = $("<span>").addClass("label label-primary").text(i);
-      title = $("<strong>").text(title);
-      articleHeadline.append(articleNumber,title);
-
-      written_by = $("<h5>").text(written_by);
-      
-      var row = $("<div>").addClass("well").attr("id","article-well-"+i);
-      row.append(articleHeadline, written_by);
-      resultDiv.append(row);
-    }
-  });
-  
+  }).then(updatePage);
 };
 
+/**
+ * updatePage
+ * @param {ajax response} NYTData 
+ */
+function updatePage(NYTData){
+  var docs = NYTData.response.docs;
+  var numArticles = parseInt($("#article-count").val());
+  var resultDiv = $("#article-section");
+  
+  resultDiv.empty();
+  for(var i=0; i < numArticles; i++){
+    var title = docs[i].headline.main;
+    var written_by = docs[i].byline.original;
+    var section = docs[i].section_name;
+    var datePublished = docs[i].pub_date;
+    var linkURL = docs[i].web_url;
+    // console.log("Title:", title);
+    // console.log("Written By:", written_by);
+    // console.log("Section:", section);
+    // console.log("date published:", datePublished);
+    // console.log("Link:", linkURL);
+
+    var articleHeadline = $("<h2>").addClass("articleHeadline");
+    var articleNumber = $("<span>").addClass("label label-primary").text(i+1);
+    title = $("<strong>").text(" "+title);
+    articleHeadline.append(articleNumber,title);
+
+    written_by = (written_by !== null ) ? $("<h3>").text(written_by) : "";
+    section = $("<h4>").text(section);
+    datePublished = $("<h4>").text(datePublished);
+    linkURL = $("<a>").attr("href",linkURL).attr("target","_blank").text(linkURL);
+    
+    var row = $("<li>").addClass("list-group-item articleHeadline").append(articleHeadline, written_by, section, datePublished, linkURL);
+    row = $("<ul>").addClass("list-group").html(row);
+    row = $("<div>").addClass("card card-body bg-light").attr("id","article-"+(i+1)).html(row);
+    resultDiv.append(row);
+  }
+}
+
 $(function(){
-  $("#search_button").on('click',function(e){
+  $("#search").on('click',function(e){
     e.preventDefault();
-    var searchTerm = $("#search_term").val();
-    searchThis(searchTerm);
+    var searchTerm = $("#search_term").val().trim();
+    var startYear = $("#startYear").val().trim();
+    var endYear = $("#endYear").val().trim();
+    searchThis(searchTerm, startYear, endYear);
   }); // END click search_button
 });
